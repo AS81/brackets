@@ -1,42 +1,25 @@
 module.exports = function check(str, bracketsConfig) {
-    let arrayBrackets = [];
-    let result = true;
-    bracketsConfig.forEach((item) => {
-        console.log(item, isStrCorrectOnePairBrackets(str, item));
-        if (!isStrCorrectOnePairBrackets(str, item)) {
-            console.log(`result must be false`);
-            result = false;
-        }
+    // make array of pairs of brackets
+    let bracketsPair = [];
+    bracketsConfig.forEach((element, i) => {
+        bracketsPair[i] = element[0] + element[1];
     });
-    console.log(`res is ${result}`);
-    return result;
 
-    function isStrCorrectOnePairBrackets(str, bracketsPair) {
-        //let bracketsPair = bracketsConfig[0];
-        console.log(`str is ${str}, bracketsPair is ${bracketsPair}`);
-        arrayBrackets = [];
-        let correct = true;
-        let bracketIsOpened = false;
-        for (let i = 0; i < str.length; i++) {
-            //if (bracketsPair.indexOf(str[i]) != -1) {
-            if (str[i] === bracketsPair[1]) {
-                bracketIsOpened = false;
-                if (i === 0 || arrayBrackets.pop() != bracketsPair[0]) {
-                    correct = false;
-                }
-            } else {
-                arrayBrackets.push(str[i]);
-                bracketIsOpened = true;
-            }
-            // }
-        }
-        console.log(
-            `arrayB: ${arrayBrackets}, corr = ${correct}, isOpened = ${bracketIsOpened}`
-        );
-        if (bracketIsOpened === true) {
-            return false;
+    let strShorten;
+    testStr(str);
+    return String(strShorten).length === 0;
+
+    // in str recursive replace each pair of brackets with ''
+    function testStr(str) {
+        strShorten = str;
+        bracketsPair.forEach((pair) => {
+            strShorten = strShorten.replace(pair, "");
+        });
+        if (strShorten.length < str.length && strShorten.length > 0) {
+            str = strShorten;
+            testStr(str);
         } else {
-            return correct;
-        } // return true; //arrayBrackets.length === 0;
+            return;
+        }
     }
 };
