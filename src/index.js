@@ -7,7 +7,7 @@ module.exports = function check(str, bracketsConfig) {
 
     let strShorten;
     testStr(str);
-    return String(strShorten).length === 0;
+    return strShorten.length === 0;
 
     // in str recursive replace each pair of brackets with ''
     function testStr(str) {
